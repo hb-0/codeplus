@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension
+         point="org.eclipse.jdt.ui.javaEditorTextHovers">
+      <hover
+            activate="true"
+            class="codeplus.hover.JavaDaoHover"
+            id="codeplus.hover.JavaDaoHover">
+      </hover>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus"> 
+	<viewerContribution 
+	      id="codeplus.popup.GoSqlXmlActionDelegate"
+	   targetID="#CompilationUnitEditorContext"> 
+	   <action
+	         id="codeplus.popup.GoSqlXmlActionDelegate.action" 
+	         label="Open mybatis sql xml"
+	         icon="icons/goto_input.png"
+	      menubarPath="additions" 
+	      class="codeplus.popup.GoSqlXmlActionDelegate"> 
+	      </action> 
+	   </viewerContribution> 
+	</extension>
+	<!--
+   <extension point="org.eclipse.ui.popupMenus"> 
+	<viewerContribution 
+	      id="codeplus.popup.GoSqlXmlActionDelegate"
+	   targetID="#CompilationUnitEditorContext"> 
+	   <action
+	         id="codeplus.popup.GoSqlXmlActionDelegate.action" 
+	         label="Open declaration interface class"
+	         icon="icons/goto_input.png"
+	      menubarPath="additions" 
+	      class="codeplus.popup.GoSqlXmlActionDelegate"> 
+	      </action> 
+	   </viewerContribution> 
+	</extension>
+	-->
+
+</plugin>

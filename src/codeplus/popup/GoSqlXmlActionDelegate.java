@@ -1,6 +1,9 @@
 package codeplus.popup;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.xpath.XPathExpressionException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -23,10 +26,11 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import codeplus.Activator;
 import codeplus.util.EditorUtil;
-import codeplus.util.MapperNamespaceCache;
 import codeplus.util.TextUtil;
 import codeplus.util.XmlUtil;
 import codeplus.util.XmlUtil.MatchFile;
+import codeplus.util.mapper.FindMapperXml;
+import codeplus.util.mapper.MapperNamespaceCache;
 
 public class GoSqlXmlActionDelegate extends ActionDelegate implements IEditorActionDelegate {
 
@@ -36,10 +40,6 @@ public class GoSqlXmlActionDelegate extends ActionDelegate implements IEditorAct
 	 * @see ActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		//		MessageBox box = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-		//		box.setMessage("Executing: " + getClass());
-		//		box.open();
-
 		ISelection i = currentEditor.getEditorSite().getSelectionProvider().getSelection();
 		if (i instanceof ITextSelection) {
 			ITextSelection ts = (ITextSelection) i;
@@ -47,17 +47,35 @@ public class GoSqlXmlActionDelegate extends ActionDelegate implements IEditorAct
 
 			IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
 			String fileName = file.getName();
-			if (fileName.matches(".*(?i)(Dao|Mapper)\\.java")) {
+			if (fileName.matches(FindMapperXml.MATCH_REG)) {
 				String content = EditorUtil.getText(currentEditor);
 				String sqlId = TextUtil.getSelectedWord(content, off);
-				String packName = TextUtil.getJavaPackage(file);
-				String namespace = new StringBuilder(packName).append(".").append(fileName.substring(0, fileName.lastIndexOf("."))).toString();
+
+				String namespace = null;
+				if (sqlId.contains(".")) {
+					int index = sqlId.lastIndexOf(".");
+					namespace = sqlId.substring(0, index);
+					if (namespace.trim().length() == 0) {
+						String packName = TextUtil.getJavaPackage(file);
+						namespace = new StringBuilder(packName).append(".").append(fileName.substring(0, fileName.lastIndexOf("."))).toString();
+					}
+					sqlId = sqlId.substring(index + 1);
+				} else {
+					String packName = TextUtil.getJavaPackage(file);
+					namespace = new StringBuilder(packName).append(".").append(fileName.substring(0, fileName.lastIndexOf("."))).toString();
+				}
 
 				IProject project = EditorUtil.getCurrentProject(currentEditor);
 				IJavaProject javaProj = JavaCore.create(project);
-				List<IFile> lst = MapperNamespaceCache.getInstance().get(javaProj, namespace, null);
+				IFile f = null;
+				try {
+					f = FindMapperXml.findSqlXml(javaProj, namespace, sqlId);
+				} catch (XPathExpressionException | InterruptedException e) {
+					Activator.log(e);
+				}
+				if (f != null) {
+					List<IFile> lst = Arrays.asList(f);
 
-				if (lst != null) {
 					MatchFile mf = XmlUtil.getMatchFileById(lst, sqlId);
 					IFile fileToOpen = mf.getFile();
 					EditorUtil.openFile(fileToOpen, mf.getMatchLineNo());

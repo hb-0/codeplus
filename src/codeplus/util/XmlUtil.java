@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import codeplus.Activator;
+import codeplus.util.mapper.MapperNamespaceCache;
 
 public class XmlUtil {
 	public static class MatchFile {

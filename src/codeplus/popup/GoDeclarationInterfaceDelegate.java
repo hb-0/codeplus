@@ -23,10 +23,10 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import codeplus.Activator;
 import codeplus.util.EditorUtil;
-import codeplus.util.MapperNamespaceCache;
 import codeplus.util.TextUtil;
 import codeplus.util.XmlUtil;
 import codeplus.util.XmlUtil.MatchFile;
+import codeplus.util.mapper.MapperNamespaceCache;
 
 public class GoDeclarationInterfaceDelegate extends ActionDelegate implements IEditorActionDelegate {
 

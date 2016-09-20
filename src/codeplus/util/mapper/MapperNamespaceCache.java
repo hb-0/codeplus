@@ -1,4 +1,4 @@
-package codeplus.util;
+package codeplus.util.mapper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import codeplus.Activator;
+import codeplus.util.XpathUtil;
 
 //import net.harawata.mybatipse.Activator;
 //import net.harawata.mybatipse.util.XpathUtil;

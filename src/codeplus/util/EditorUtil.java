@@ -21,7 +21,7 @@ import codeplus.Activator;
 public class EditorUtil {
 
 	public static String getText(IEditorPart je) {
-		IFile file = je.getEditorInput().getAdapter(IFile.class);
+		IFile file = (IFile) je.getEditorInput().getAdapter(IFile.class);
 		String charset = null;
 		try {
 			charset = file.getCharset();
@@ -40,7 +40,7 @@ public class EditorUtil {
 	}
 
 	public static String getFileName(IEditorPart je) {
-		IFile file = je.getEditorInput().getAdapter(IFile.class);
+		IFile file = (IFile) je.getEditorInput().getAdapter(IFile.class);
 		return file.getName();
 	}
 

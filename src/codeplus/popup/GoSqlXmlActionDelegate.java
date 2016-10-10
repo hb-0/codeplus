@@ -10,19 +10,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionDelegate;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 import codeplus.Activator;
 import codeplus.util.EditorUtil;
@@ -30,7 +22,6 @@ import codeplus.util.TextUtil;
 import codeplus.util.XmlUtil;
 import codeplus.util.XmlUtil.MatchFile;
 import codeplus.util.mapper.FindMapperXml;
-import codeplus.util.mapper.MapperNamespaceCache;
 
 public class GoSqlXmlActionDelegate extends ActionDelegate implements IEditorActionDelegate {
 
@@ -45,7 +36,7 @@ public class GoSqlXmlActionDelegate extends ActionDelegate implements IEditorAct
 			ITextSelection ts = (ITextSelection) i;
 			int off = ts.getOffset();
 
-			IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
+			IFile file = (IFile) currentEditor.getEditorInput().getAdapter(IFile.class);
 			String fileName = file.getName();
 			if (fileName.matches(FindMapperXml.MATCH_REG)) {
 				String content = EditorUtil.getText(currentEditor);

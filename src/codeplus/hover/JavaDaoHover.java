@@ -50,7 +50,7 @@ public class JavaDaoHover implements IJavaEditorTextHover, ITextHoverExtension, 
 			wholeSqlId = selected;
 		}
 
-		IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
+		IFile file = (IFile) currentEditor.getEditorInput().getAdapter(IFile.class);
 		String fileName = file.getName();
 		if (fileName.matches(FindMapperXml.MATCH_REG)) {
 			String namespace = null;
@@ -135,7 +135,7 @@ public class JavaDaoHover implements IJavaEditorTextHover, ITextHoverExtension, 
 			IAction action1 = new Action() {
 				public void run() {
 					try {
-						IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
+						IFile file = (IFile) currentEditor.getEditorInput().getAdapter(IFile.class);
 						String fileName = file.getName();
 						if (fileName.matches(FindMapperXml.MATCH_REG)) {
 							String[] arr = getNamespaceAndSqlid();
@@ -172,7 +172,7 @@ public class JavaDaoHover implements IJavaEditorTextHover, ITextHoverExtension, 
 			IAction action2 = new Action() {
 				public void run() {
 					try {
-						IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
+						IFile file = (IFile) currentEditor.getEditorInput().getAdapter(IFile.class);
 						String fileName = file.getName();
 						if (fileName.matches(FindMapperXml.MATCH_REG)) {
 							String[] arr = getNamespaceAndSqlid();

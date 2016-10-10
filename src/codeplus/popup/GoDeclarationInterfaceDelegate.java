@@ -42,7 +42,7 @@ public class GoDeclarationInterfaceDelegate extends ActionDelegate implements IE
 			ITextSelection ts = (ITextSelection) i;
 			int off = ts.getOffset();
 
-			IFile file = currentEditor.getEditorInput().getAdapter(IFile.class);
+			IFile file = (IFile) currentEditor.getEditorInput().getAdapter(IFile.class);
 			String fileName = file.getName();
 			String content = EditorUtil.getText(currentEditor);
 			String methodName = TextUtil.getSelectedWord(content, off);
